@@ -20,17 +20,72 @@
   <title>Pajeet Name Generator</title>
   <style>
     :root { --accent:#ff720f; --bg:#faf8f5; --text:#0E6F06; --header:#222;}
-    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif; background:var(--bg); color:var(--text); }
-    .wrap { max-width:900px; margin:0 auto; padding:20px; text-align:center; }
-    .banner { width:100%; height:auto; display:block; margin:12px 0; border-radius:12px; object-fit:cover }
-    h1 { font-weight:700; letter-spacing:.5px; margin:10px 0 6px }
-    .lead { opacity:.7; margin:0 0 18px }
-    .name { font-size:clamp(28px,5vw,56px); font-weight:800; letter-spacing:.5px; margin:18px 0 14px }
-    .controls { display:flex; gap:10px; justify-content:center; margin:8px 0 14px; flex-wrap:wrap }
-    button { padding:12px 18px; border-radius:10px; border:0; cursor:pointer; font-weight:700 }
-    #generate { background:var(--accent); color:#fff }
-    #copy { background:#eee }
-    .note { font-size:12px; opacity:.6; margin-top:14px }
+    body { 
+      margin:0; 
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif; 
+      background:var(--bg); 
+      color:var(--text); 
+    }
+    
+    .wrap { 
+           max-width:900px; 
+           margin:0 auto; 
+           padding:20px; 
+           text-align:center; 
+          }
+    
+    .banner {
+             width:100%; 
+             height:auto; 
+             display:block; 
+             margin:12px 0; 
+             border-radius:12px; 
+             object-fit:cover 
+            }
+    
+    h1 { 
+        font-weight:700; 
+        letter-spacing:.5px; 
+        margin:10px 0 6px 
+        color:var(--header); /*applies only to header */
+       }
+    
+    .lead { 
+           opacity:.7; 
+           margin:0 0 18px 
+          }
+    
+    .name { 
+           font-size:clamp(28px,5vw,56px); 
+           font-weight:800; 
+           letter-spacing:.5px; 
+           margin:18px 0 14px 
+           color:var(--text); /* generated name stays green */
+          }
+    
+    .controls { 
+               display:flex; gap:10px; 
+               justify-content:center; 
+               margin:8px 0 14px; 
+               flex-wrap:wrap 
+              }
+    
+    button { padding:12px 18px; 
+            border-radius:10px; 
+            border:0; 
+            cursor:pointer; 
+            font-weight:700
+           }
+    #generate { 
+      background:var(--accent); 
+      color:#fff 
+    }
+    #copy { background:#eee 
+          }
+    .note { font-size:12px; 
+           opacity:.6; 
+           margin-top:14px
+          }
   </style>
 </head>
 <body>
