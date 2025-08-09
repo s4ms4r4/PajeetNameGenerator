@@ -124,40 +124,41 @@ h1 {
 
 </div>
 
-  <script>
-    // ----------------- CONFIG -----------------
-    // Paths to  banner images ( images/ folder example).
-    const BANNER_TOP_URL    = 'images/bannertop.png';
-    const BANNER_BOTTOM_URL = ''; 
+<script>
+// ----------------- CONFIG -----------------
+const BANNER_TOP_URL    = 'images/bannertop.png';
+const BANNER_BOTTOM_URL = ''; // keep hidden until first click
 
-// Cycle through these AFTER the user clicks Generate
+// Bottom banners to cycle through AFTER Generate is clicked
 const BOTTOM_BANNERS = [
-    'images/bannerbottom.png',
-    'images/bannerbottom2.png',
-    'images/bannerbottom3.png',
-    'images/bannerbottom4.png',
-    'images/bannerbottom5.png',
-    'images/bannerbottom6.png',
-    'images/bannerbottom7.png',
-    'images/bannerbottom8.png',
-    'images/bannerbottom9.png',
-    'images/bannerbottom10.png',
-    'images/bannerbottom12.png',
-    'images/bannerbottom13.png',
-    'images/bannerbottom14.png',
-    'images/bannerbottom15.png',
-    'images/bannerbottom16.png',
-    'images/bannerbottom17.png',
-    'images/bannerbottom18.png',
-    'images/bannerbottom19.png',
-    'images/bannerbottom20.png',
-    'images/bannerbottom21.png',
-    'images/bannerbottom22.png',
-
+  'images/bannerbottom.png',
+  'images/bannerbottom2.png',
+  'images/bannerbottom3.png',
+  'images/bannerbottom4.png',
+  'images/bannerbottom5.png',
+  'images/bannerbottom6.png',
+  'images/bannerbottom7.png',
+  'images/bannerbottom8.png',
+  'images/bannerbottom9.png',
+  'images/bannerbottom10.png',
+  'images/bannerbottom12.png',
+  'images/bannerbottom13.png',
+  'images/bannerbottom14.png',
+  'images/bannerbottom15.png',
+  'images/bannerbottom16.png',
+  'images/bannerbottom17.png',
+  'images/bannerbottom18.png',
+  'images/bannerbottom19.png',
+  'images/bannerbottom20.png',
+  'images/bannerbottom21.png',
+  'images/bannerbottom22.png'
 ];
-let bottomIdx = -1; // start before the first
+let bottomIdx = -1;
 
+// (Optional) preload
+BOTTOM_BANNERS.forEach(src => { const i = new Image(); i.src = src; });
 
+// ----------------- FALLBACK LISTS -----------------
     // Fallback lists in lieu of json.
     let FIRST_NAME = [
 "Armpit",
@@ -690,63 +691,42 @@ let bottomIdx = -1; // start before the first
 "Scrubpit",
 "Scroopesh"];
 
-    // ----------------- HELPERS -----------------
-    const $ = sel => document.querySelector(sel);
-    const rand = arr => arr[Math.floor(Math.random() * arr.length)];
+// ----------------- HELPERS -----------------
+const $ = sel => document.querySelector(sel);
+const rand = arr => arr[Math.floor(Math.random() * arr.length)];
 
-    function setBanner($img, url) {
-      if (url && typeof url === 'string') { $img.src = url; }
-      else { $img.style.display = 'none'; }
+function setBanner($img, url) {
+  if (url && typeof url === 'string') { $img.src = url; $img.style.display = 'block'; }
+  else { $img.style.display = 'none'; }
+}
+
+function randomName() {
+  if (!Array.isArray(FIRST_NAME) || !FIRST_NAME.length ||
+      !Array.isArray(LAST_NAME)  || !LAST_NAME.length) return '';
+  const first = rand(FIRST_NAME);
+  const pool  = LAST_NAME.length > 1 ? LAST_NAME.filter(n => n !== first) : LAST_NAME;
+  return `${first} ${rand(pool)}`;
+}
+
+async function loadJSON() {
+  try {
+    const res = await fetch('names.json', { cache: 'no-store' });
+    if (!res.ok) return false;
+    const data = await res.json();
+    if (Array.isArray(data.first) && Array.isArray(data.last)) {
+      FIRST_NAME = data.first;
+      LAST_NAME  = data.last;
+      return true;
     }
-    // Leave bottom blank so it's hidden on load
-const BANNER_TOP_URL    = 'images/bannertop.png';
-const BANNER_BOTTOM_URL = '';
-
-// Images to cycle through AFTER Generate is clicked
-const BOTTOM_BANNERS = [
-  'images/bannerbottom.png',
-  'images/bannerbottom3.png',
-  'images/bannerbottom4.png'
-];
-let bottomIdx = -1; // start before first image
-
-// (Optional) Preload for instant swaps
-BOTTOM_BANNERS.forEach(src => { const i = new Image(); i.src = src; });
-
-
-    function randomName() {
-      if (!Array.isArray(FIRST_NAME) || FIRST_NAME.length === 0 ||
-          !Array.isArray(LAST_NAME)  || LAST_NAME.length  === 0) {
-        return '';
-      }
-      const first = rand(FIRST_NAME);
-      // Ensure last != first (works even if lists are identical)
-      const pool = LAST_NAME.length > 1 ? LAST_NAME.filter(n => n !== first) : LAST_NAME;
-      const last = rand(pool);
-      return `${first} ${last}`;
-    }
-
-    async function loadJSON() {
-      try {
-        const res = await fetch('names.json', { cache: 'no-store' });
-        if (!res.ok) return false;
-        const data = await res.json();
-        if (Array.isArray(data.first) && Array.isArray(data.last)) {
-          FIRST_NAME = data.first;
-          LAST_NAME  = data.last;
-          return true;
-        }
-      } catch (e) {
-        // ignore; will use fallbacks
-      }
-      return false;
-    }
+  } catch {}
+  return false;
+}
 
 // ----------------- INIT -----------------
 (async () => {
-  // Banners
+  // banners
   setBanner($('#bannerTop'), BANNER_TOP_URL);
-  setBanner($('#bannerBottom'), BANNER_BOTTOM_URL); // stays hidden on load
+  setBanner($('#bannerBottom'), BANNER_BOTTOM_URL); // hidden on load
 
   await loadJSON();
 
@@ -758,13 +738,13 @@ BOTTOM_BANNERS.forEach(src => { const i = new Image(); i.src = src; });
     $('#name').textContent = val;
     $('#copy').disabled = !val;
 
-    // Cycle bottom banner ON CLICK
+    // cycle bottom banner
     if (BOTTOM_BANNERS.length) {
       bottomIdx = (bottomIdx + 1) % BOTTOM_BANNERS.length;
-      const nextUrl = BOTTOM_BANNERS[Math.floor(Math.random() * BOTTOM_BANNERS.length)];
+      const nextUrl = BOTTOM_BANNERS[bottomIdx];
       const img = $('#bannerBottom');
       img.src = nextUrl;
-      img.style.display = 'block'; 
+      img.style.display = 'block';
     }
   });
 
@@ -775,27 +755,7 @@ BOTTOM_BANNERS.forEach(src => { const i = new Image(); i.src = src; });
       await navigator.clipboard.writeText(txt);
       $('#copy').textContent = 'Copied!';
       setTimeout(() => $('#copy').textContent = 'Copy', 900);
-    } catch {
-      alert('Copy failed.');
-    }
+    } catch { alert('Copy failed.'); }
   });
 })();
-
-
-
-  $('#copy').addEventListener('click', async () => {
-    const txt = $('#name').textContent.trim();
-    if (!txt) return;
-    try {
-      await navigator.clipboard.writeText(txt);
-      $('#copy').textContent = 'Copied!';
-      setTimeout(() => $('#copy').textContent = 'Copy', 900);
-    } catch {
-      alert('Copy failed.');
-    }
-  });
-})();
-
-  </script>
-</body>
-</html>
+</script>
