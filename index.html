@@ -127,8 +127,36 @@ h1 {
   <script>
     // ----------------- CONFIG -----------------
     // Paths to  banner images ( images/ folder example).
-    const BANNER_TOP_URL    = 'images/bannertop.png';   // '' to hide
-    const BANNER_BOTTOM_URL = 'images/bannerbottom2.png';// '' to hide
+    const BANNER_TOP_URL    = 'images/bannertop.png';
+    const BANNER_BOTTOM_URL = ''; 
+
+// Cycle through these AFTER the user clicks Generate
+const BOTTOM_BANNERS = [
+    'images/bannerbottom.png',
+    'images/bannerbottom2.png',
+    'images/bannerbottom3.png'
+    'images/bannerbottom4.png'
+    'images/bannerbottom5.png'
+    'images/bannerbottom6.png'
+    'images/bannerbottom7.png'
+    'images/bannerbottom8.png'
+    'images/bannerbottom9.png'
+    'images/bannerbottom10.png'
+    'images/bannerbottom12.png'
+    'images/bannerbottom13.png'
+    'images/bannerbottom14.png'
+    'images/bannerbottom15.png'
+    'images/bannerbottom16.png'
+    'images/bannerbottom17.png'
+    'images/bannerbottom18.png'
+    'images/bannerbottom19.png'
+    'images/bannerbottom20.png'
+    'images/bannerbottom21.png'
+    'images/bannerbottom22.png'
+
+];
+let bottomIdx = -1; // start before the first
+
 
     // Fallback lists in lieu of json.
     let FIRST_NAME = [
@@ -713,11 +741,21 @@ h1 {
   $('#copy').disabled = true;
 
   // Wire buttons
-  $('#generate').addEventListener('click', () => {
-    const val = randomName();
-    $('#name').textContent = val;
-    $('#copy').disabled = !val;
-  });
+$('#generate').addEventListener('click', () => {
+  const val = randomName();
+  $('#name').textContent = val;
+  $('#copy').disabled = !val;
+
+  // Cycle bottom banner ON CLICK
+  if (BOTTOM_BANNERS.length) {
+    bottomIdx = (bottomIdx + 1) % BOTTOM_BANNERS.length;
+    const nextUrl = BOTTOM_BANNERS[Math.floor(Math.random() * BOTTOM_BANNERS.length)];
+    const img = $('#bannerBottom');
+    img.src = nextUrl;
+    img.style.display = 'block'; // reveal once we have a URL
+  }
+});
+
 
   $('#copy').addEventListener('click', async () => {
     const txt = $('#name').textContent.trim();
