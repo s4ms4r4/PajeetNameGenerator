@@ -19,13 +19,34 @@
 
   <title>Pajeet Name Generator</title>
   <style>
-    :root { --accent:#ff720f; --bg:#faf8f5; --text:#0E6F06; --header:#222;}
-    body { 
-      margin:0; 
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif; 
-      background:var(--bg); 
-      color:var(--header); 
-    }
+:root { 
+  --accent:#ff720f; 
+  --bg:#faf8f5; 
+  --body:#222;   /* default text color for the body */
+  --name:#0E6F06; /* green for generated name */
+}
+
+body { 
+  margin:0; 
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif; 
+  background:var(--bg); 
+  color:var(--body); /* default body text color */
+}
+
+h1 { 
+  font-weight:700; 
+  letter-spacing:.5px; 
+  margin:10px 0 6px; 
+}
+
+.name { 
+  font-size:clamp(28px,5vw,56px); 
+  font-weight:800; 
+  letter-spacing:.5px; 
+  margin:18px 0 14px; 
+  color:var(--name); /* green only for generated name */
+}
+
     
     .wrap { 
            max-width:900px; 
@@ -43,24 +64,9 @@
              object-fit:cover 
             }
     
-    h1 { 
-        font-weight:700; 
-        letter-spacing:.5px; 
-        margin:10px 0 6px 
-        color:var(--header); /*applies only to header */
-       }
-    
     .lead { 
            opacity:.7; 
            margin:0 0 18px 
-          }
-    
-    .name { 
-           font-size:clamp(28px,5vw,56px); 
-           font-weight:800; 
-           letter-spacing:.5px; 
-           margin:18px 0 14px 
-           color:var(--text); /* generated name stays green */
           }
     
     .controls { 
