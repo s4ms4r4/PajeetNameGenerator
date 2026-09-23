@@ -102,7 +102,7 @@ h1 {
 </head>
 <body>
   <div class="wrap">
-    <!-- Set these to your image paths (relative to this file). Leave empty to hide. -->
+
     <img id="bannerTop" class="banner" alt="Top banner">
     <h1>Pajeet Name Generator</h1>
     <p class="lead">Saar plead do the needful and click to get proud Indian name</p>
@@ -110,8 +110,8 @@ h1 {
     <div id="name" class="name" aria-live="polite"></div>
 
     <div class="controls">
-      <button id="generate">JEETIFY MY NAME</button>
-      <button id="copy">Copy</button>
+      <button id="generate"data-umami-event="generate-name">JEETIFY MY NAME</button>
+      <button id="copy"data-umami-event="copy-name">Copy</button>
     </div>
 
 <img id="bannerBottom" class="banner" alt="Bottom banner">
@@ -135,7 +135,7 @@ h1 {
 const BANNER_TOP_URL    = 'images/bannertop.png';
 const BANNER_BOTTOM_URL = ''; // keep hidden until first click
 
-// Bottom banners to cycle through AFTER Generate is clicked
+// Bottom banners cycle after Generate is clicked
 const BOTTOM_BANNERS = [
   'images/bannerbottom2.png',
   'images/bannerbottom3.png',
@@ -177,7 +177,7 @@ let bottomIdx = -1;
 BOTTOM_BANNERS.forEach(src => { const i = new Image(); i.src = src; });
 
 // ----------------- FALLBACK LISTS -----------------
-    // Fallback lists in lieu of json.
+    // Fallback lists in lieu of json
     let FIRST_NAME = [
 "Armpit",
 "Banjeet",
